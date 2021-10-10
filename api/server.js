@@ -8,4 +8,10 @@ const server = express();
 
 // initial commit
 
+server.use(express.json());
+
+server.use('*', (req, res) => {
+  res.json({ message: 'this da data' });
+});
+
 module.exports = server;
