@@ -27,6 +27,8 @@ const validateProjectBody = (req, res, next) => {
         .status(400)
         .json({ message: 'Request is missing name or description' })
     );
+  } else {
+    next();
   }
 };
 
