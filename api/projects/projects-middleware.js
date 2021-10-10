@@ -19,4 +19,15 @@ async function validateProjectId(req, res, next) {
   }
 }
 
-module.exports = { validateProjectId };
+const validateProjectBody = (req, res, next) => {
+  const { name, description } = req.body;
+  if (!name || !description) {
+    next(
+      res
+        .status(400)
+        .json({ message: 'Request is missing name or description' })
+    );
+  }
+};
+
+module.exports = { validateProjectId, validateProjectBody };
