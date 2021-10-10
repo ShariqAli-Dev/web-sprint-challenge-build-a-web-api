@@ -17,4 +17,21 @@ router.get('/:id', validateProjectId, (req, res) => {
   res.status(201).json(req.project);
 });
 
+router.post('/', (req, res) => {
+  const { name, description } = req.body;
+
+  if (!name || !description) {
+    res.status(400).json({ message: 'Request is missing name or description' });
+    return;
+  }
+
+  Projects.insert(req.body)
+    .then((addedProject) => {
+      res.status(201).json(addedProject);
+    })
+    .catch((err) =>
+      res.status(500).json({ message: 'Error adding user to database' })
+    );
+});
+
 module.exports = router;
