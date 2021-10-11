@@ -20,6 +20,20 @@ router.get('/:id', validateProjectId, (req, res) => {
   res.status(201).json(req.project);
 });
 
+router.get('/:id/actions', (req, res) => {
+  Projects.getProjectActions(req.params.id)
+    .then((projectActions) => {
+      if (projectActions) {
+        res.status(201).json(projectActions);
+      } else {
+        res.status(404).json([]);
+      }
+    })
+    .catch((err) =>
+      res.status(500).json('Error grabbing actions from databse')
+    );
+});
+
 router.post('/', validateProjectBody, (req, res) => {
   Projects.insert(req.body)
     .then((addedProject) => {
