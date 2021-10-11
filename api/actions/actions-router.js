@@ -72,4 +72,8 @@ router.put('/:id', validateActionId, (req, res) => {
   });
 });
 
+router.delete('/id', validateActionId, (req, res) => {
+  Actions.remove(req.params.id);
+});
+
 module.exports = router;
