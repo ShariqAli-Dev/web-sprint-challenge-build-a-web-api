@@ -49,7 +49,14 @@ router.put('/:id', validateProjectId, (req, res) => {
         .status(500)
         .json({ message: 'Error updating project in the database' })
     );
-
-  // Projects.update()
 });
+
+router.delete('/:id', validateProjectId, (req, res) => {
+  Projects.remove(req.params.id)
+    .then((deletedBody) => res.status(201))
+    .catch((err) => {
+      res.status(500).json({ message: 'Error removing project from database' });
+    });
+});
+
 module.exports = router;

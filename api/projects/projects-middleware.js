@@ -8,25 +8,20 @@ async function validateProjectId(req, res, next) {
       req.project = projectMaybe;
       next();
     } else {
-      next(
-        res
-          .status(404)
-          .json({ message: `Project with id ${req.params.id} not found` })
-      );
+      next({
+        status: 404,
+        message: `Project with id ${req.params.id} not found`,
+      });
     }
   } catch (err) {
-    next(res.status(500).json(err.message));
+    next({ status: 500, message: err });
   }
 }
 
 const validateProjectBody = (req, res, next) => {
   const { name, description } = req.body;
   if (!name || !description) {
-    next(
-      res
-        .status(400)
-        .json({ message: 'Request is missing name or description' })
-    );
+    next({ status: 400, message: 'Request is missing name or description' });
   } else {
     next();
   }
