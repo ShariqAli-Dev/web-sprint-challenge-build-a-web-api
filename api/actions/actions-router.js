@@ -18,4 +18,8 @@ router.get('/', (req, res) => {
     );
 });
 
+router.get('/:id', validateActionId, (req, res) => {
+  res.status(201).json(req.action);
+});
+
 module.exports = router;
