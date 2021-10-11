@@ -37,6 +37,8 @@ router.post('/', (req, res) => {
     .then((project) => {
       if (!project) {
         res.status(404).json('Project id does not exist within the database');
+      } else {
+        return;
       }
     })
     .catch((err) =>
@@ -48,6 +50,26 @@ router.post('/', (req, res) => {
     .catch((err) =>
       res.status(500).json('Error adding new action into databse')
     );
+});
+
+router.put('/:id', validateActionId, (req, res) => {
+  const { notes, description, completed, project_id } = req.body;
+
+  if (!notes || !description || !completed || !project_id) {
+    res.status(400).json({
+      message:
+        'The request body is missing notes, description, completed, or project_id',
+    });
+    return;
+  }
+
+  Actions.update(req.params.id, req.body).then((updatedAction) => {
+    if (updatedAction) {
+      res.status(201).json(updatedAction);
+    } else {
+      res.status(404);
+    }
+  });
 });
 
 module.exports = router;
